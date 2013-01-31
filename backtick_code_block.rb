@@ -6,12 +6,12 @@ module BacktickCodeBlock
     def registered(app)
       # print app.methods
       app.before_render do |content, renderer|
-    require 'pp'
-    pp app
-    print Middleman::CoreExtensions::ExternalHelpers.inspect
-    # replacement = BacktickCodeBlock.render_code_block(content)
-    # content.replace(replacement)
-    # content.sub!('Ubuntu', 'Ubuntu LOL !!!!')
+      require 'pp'
+      pp app
+      print Middleman::CoreExtensions::ExternalHelpers.inspect
+      # replacement = BacktickCodeBlock.render_code_block(content)
+      # content.replace(replacement)
+      # content.sub!('Ubuntu', 'Ubuntu LOL !!!!')
       end
     end
 
