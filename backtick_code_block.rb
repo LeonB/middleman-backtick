@@ -52,7 +52,12 @@ module BacktickCodeBlock
           raw += "\n```\n"
         else
           code = self.block_code(str, @lang)
-          "<figure class='code'>#{@caption}#{code}</figure>"
+          "<figure class='code'>
+            #{@caption}
+            <div>
+              #{code}
+            </div>
+          </figure>"
         end
       end
     end
