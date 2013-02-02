@@ -20,13 +20,9 @@ end
 module Middleman
     module Renderers
         class RedcarpetTemplate < ::Tilt::RedcarpetTemplate::Redcarpet2
-            # include ::BacktickCodeBlock
-            # include Middleman::Syntax::MarkdownCodeRenderer
-
             def render(*args)
                 app = args[0]
                 app.run_hook :before_render, @data, self
-                # @data = render_code_block(@data)
                 content = super(*args)
                 app.run_hook :after_render, content, self
                 return content

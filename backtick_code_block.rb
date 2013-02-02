@@ -1,17 +1,22 @@
+require 'middleman-core/renderers/redcarpet'
+require 'middleman-syntax/extension'
+
 module BacktickCodeBlock
   class << self
+    include Middleman::Syntax::MarkdownCodeRenderer
+
     AllOptions = /([^\s]+)\s+(.+?)(https?:\/\/\S+)\s*(.+)?/i
     LangCaption = /([^\s]+)\s*(.+)?/i
 
     def registered(app)
       # print app.methods
       app.before_render do |content, renderer|
-      require 'pp'
-      pp app
-      print Middleman::CoreExtensions::ExternalHelpers.inspect
-      # replacement = BacktickCodeBlock.render_code_block(content)
-      # content.replace(replacement)
-      # content.sub!('Ubuntu', 'Ubuntu LOL !!!!')
+        if not renderer.is_a?(Middleman::Renderers::RedcarpetTemplate)
+          next
+        end
+
+        replacement = BacktickCodeBlock.render_code_block(content)
+        content.replace(replacement)
       end
     end
 
@@ -36,30 +41,20 @@ module BacktickCodeBlock
         if str.match(/\A( {4}|\t)/)
           str = str.gsub(/^( {4}|\t)/, '')
         end
+
         if @lang.nil? || @lang == 'plain'
-          code = tableize_code(str.gsub('<','&lt;').gsub('>','&gt;'))
-          "<figure class='code'>#{@caption}#{code}</figure>"
+          @lang = 'text'
+        end
+
+        if @lang.include? "-raw"
+          raw = "``` #{@options.sub('-raw', '')}\n"
+          raw += str
+          raw += "\n```\n"
         else
-          if @lang.include? "-raw"
-            raw = "``` #{@options.sub('-raw', '')}\n"
-            raw += str
-            raw += "\n```\n"
-          else
-            code = self.block_code(str, @lang)
-            "<figure class='code'>#{@caption}#{code}</figure>"
-          end
+          code = self.block_code(str, @lang)
+          "<figure class='code'>#{@caption}#{code}</figure>"
         end
       end
-    end
-
-    def tableize_code(str, lang = '')
-      table = '<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers">'
-      code = ''
-      str.lines.each_with_index do |line,index|
-        table += "<span class='line-number'>#{index+1}</span>\n"
-        code  += "<span class='line'>#{line}</span>"
-      end
-      table += "</pre></td><td class='code'><pre><code class='#{lang}'>#{code}</code></pre></td></tr></table></div>"
     end
 
     alias :included :registered
