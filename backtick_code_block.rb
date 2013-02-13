@@ -9,14 +9,12 @@ module BacktickCodeBlock
     LangCaption = /([^\s]+)\s*(.+)?/i
 
     def registered(app)
-      # print app.methods
-      app.before_render do |content, renderer|
-        if not renderer.is_a?(Middleman::Renderers::RedcarpetTemplate)
+      app.before_render do |body, path, locs, template_class|
+        if not template_class == Middleman::Renderers::RedcarpetTemplate
           next
         end
 
-        replacement = BacktickCodeBlock.render_code_block(content)
-        content.replace(replacement)
+        BacktickCodeBlock.render_code_block(body)
       end
     end
 
@@ -35,14 +33,14 @@ module BacktickCodeBlock
           @caption = "<figcaption><span>#{$2}</span><a href='#{$3}'>#{$4 || 'link'}</a></figcaption>"
         elsif @options =~ LangCaption
           @lang = $1
-          @caption = "<figcaption><span>#{$2}</span></figcaption>"
+          @caption = "<figcaption><span>#{$2}</span></figcaption>" if $2
         end
 
         if str.match(/\A( {4}|\t)/)
           str = str.gsub(/^( {4}|\t)/, '')
         end
 
-        if @lang.nil? || @lang == 'plain'
+        if @lang.nil? || @lang == 'plain' || @lang == ''
           @lang = 'text'
         end
 
