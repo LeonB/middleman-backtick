@@ -25,9 +25,10 @@ activate :backtick_code_block
 
 ### SYNTAX
 
-`` [language] [title] [url] [link text]
-code snippet
-```
+    ```
+    [language] [title] [url] [link text]
+    code snippet
+    ```
 
 ### EXAMPLE
 
