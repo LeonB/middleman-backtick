@@ -64,4 +64,4 @@ module BacktickCodeBlock
   end
 end
 
-::Middleman::Extensions.register(:backtick_code_block, BacktickCodeBlock) 
+::Middleman::Extensions.register(:backtick_code_block, BacktickCodeBlock)
