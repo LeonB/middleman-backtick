@@ -19,6 +19,8 @@ Then run:
 
 ### Step 2 - Middleman setup
 
+Add this to your `config.rb`:
+
 ```
 activate :backtick_code_block
 ```
