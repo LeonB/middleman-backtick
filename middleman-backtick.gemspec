@@ -5,6 +5,8 @@ Gem::Specification.new do |s|
   s.name        = 'middleman-backtick'
   s.version     = '0.0.1'
   s.platform    = Gem::Platform::RUBY
+  s.authors     = ['Leon Bogaert']
+  s.summary     = 'Backtick code blocks for Middleman'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
