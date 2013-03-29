@@ -11,7 +11,7 @@ backtick_code_blocks (like octopress') for middleman
 
 Edit `Gemfile`, and add:
 
-    gem "middleman-deploy", :github => 'LeonB/middleman-backtick'
+    gem "middleman-backtick", :github => 'LeonB/middleman-backtick'
 
 Then run:
 
