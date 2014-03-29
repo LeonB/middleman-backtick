@@ -1,10 +1,7 @@
 require 'middleman-core/renderers/redcarpet'
-require 'middleman-syntax/extension'
 
 module BacktickCodeBlock
   class << self
-    include Middleman::Syntax::MarkdownCodeRenderer
-
     AllOptions = /([^\s]+)\s+(.+?)(https?:\/\/\S+)\s*(.+)?/i
     LangCaption = /([^\s]+)\s*(.+)?/i
 
@@ -48,7 +45,7 @@ module BacktickCodeBlock
             raw += str
             raw += "\n```\n"
           else
-            code = self.block_code(str, @lang)
+            code = Middleman::Syntax::Highlighter.highlight(str, @lang)
             "<figure class='code'>
               #{@caption}
               <div>
