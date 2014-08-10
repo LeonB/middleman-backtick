@@ -11,7 +11,7 @@ module BacktickCodeBlock
           next
         end
 
-        render_code_block(body)
+        BacktickCodeBlock.render_code_block(body)
       end
 
       def render_code_block(input)
